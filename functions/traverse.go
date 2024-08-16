@@ -1,11 +1,13 @@
 package functions
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func Traverse() {
@@ -31,10 +33,29 @@ func Traverse() {
 					return err
 				}
 
+				//print the file path currently being explored
+				fmt.Println(path)
+				var appendix, orgId string
+				fmt.Println("What do you want the appendix to be for this microservice (ex: accvm)?: ")
+				//take the input from user into a variable called appendix
+				fmt.Scanln(&appendix)
+				fmt.Println("What do you want the organization id to be this microservice (ex: silkworm_ac)?: ")
+				fmt.Scanln(&orgId)
+
+				fmt.Println("What do you want the allowed origins to be for this microservice (ex: https://admin-console.eagleeyes.ai/)? You can provide multiple origins separated by commas:")
+
+				// Use a buffered reader to allow multiple comma-separated inputs
+				reader := bufio.NewReader(os.Stdin)
+				originsInput, _ := reader.ReadString('\n')
+
+				// Split the input into a slice of strings and trim any extra spaces
+				allowedOrigins := strings.Split(strings.TrimSpace(originsInput), ",")
+
+				//extract the routes from the router.go file
 				data := Extract(string(content))
 
-				fmt.Println(*data)
-				fmt.Println("--------------------------------------------------")
+				_ = Map(orgId, appendix, allowedOrigins, data)
+				fmt.Println("Successfully mapped the routes")
 			}
 		}
 
