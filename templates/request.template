@@ -26,11 +26,11 @@
     },
     "active": true,
     "CORS": {
-        "enable": true,
+        "enable": false,
         "allowed_origins": [
-            "{{join .AllowedOrigins \",\"}}"
+            "{{join .AllowedOrigins ","}}"
         ],
-        "allowed_methods": "{{join .AllowedMethods \",\"}}",
+        "allowed_methods": ["{{join .AllowedMethods ","}}"],
         "allowed_headers": ["Content-Type", "Authorization"]
     },
     "global_rate_limit": {

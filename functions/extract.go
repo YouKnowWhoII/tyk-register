@@ -3,9 +3,10 @@ package functions
 import (
 	"regexp"
 	"strings"
+	"tyk-register/dtos"
 )
 
-func Extract(routerFile string) *[]RouteInfo {
+func Extract(routerFile string, groupname string) *[]dtos.RouteInfo {
 
 	// Regular expression to match routes and their corresponding methods.
 	re := regexp.MustCompile(`cg\.(\w+)\("([^"]+)",\s*api\.(\w+)\)`)
@@ -13,15 +14,15 @@ func Extract(routerFile string) *[]RouteInfo {
 	// Find all matches in the routerFile string.
 	matches := re.FindAllStringSubmatch(routerFile, -1)
 
-	var routes []RouteInfo
+	var routes []dtos.RouteInfo
 
 	for _, match := range matches {
 		method := match[1]
 		route := match[2]
 		methodName := match[3]
-		groupName := "/ac_user_management/api" // Assuming this is the group for these routes.
+		groupName := groupname
 
-		routes = append(routes, RouteInfo{
+		routes = append(routes, dtos.RouteInfo{
 			Method:     strings.ToUpper(method),
 			Route:      route,
 			MethodName: methodName,
@@ -38,12 +39,6 @@ func Extract(routerFile string) *[]RouteInfo {
 
 	// Print the JSON.
 	//fmt.Println(string(routesJSON))
-	return &routes
-}
 
-type RouteInfo struct {
-	Method     string `json:"method"`
-	Route      string `json:"route"`
-	MethodName string `json:"method_name"`
-	GroupName  string `json:"group_name"`
+	return &routes
 }

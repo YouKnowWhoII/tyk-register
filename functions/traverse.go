@@ -1,18 +1,16 @@
 package functions
 
 import (
-	"bufio"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
-func Traverse() {
+func Traverse(orgId string, gatewayUrl string, baseDir string) {
 
-	baseDir := BASE_PATH
+	//baseDir := BASE_PATH
 
 	// Walk through the directory
 	err := filepath.Walk(baseDir, func(path string, info os.FileInfo, err error) error {
@@ -27,6 +25,15 @@ func Traverse() {
 
 			// Check if router.go exists
 			if _, err := os.Stat(routerPath); err == nil {
+				// Ask the user if they want to skip this microservice
+				var skip string
+				fmt.Printf("Do you want to skip the microservice at %s? (yes/no): ", path)
+				fmt.Scanln(&skip)
+				if skip == "yes" {
+					fmt.Println("Skipping microservice at:", path)
+					return nil
+				}
+
 				// Read and print the content of router.go
 				content, err := ioutil.ReadFile(routerPath)
 				if err != nil {
@@ -35,27 +42,31 @@ func Traverse() {
 
 				//print the file path currently being explored
 				fmt.Println(path)
-				var appendix, orgId string
+				var appendix, groupname string
+				fmt.Println("What do you want the group name to be for this microservice (ex: '/ac_user_management/api'?: ")
+				fmt.Scanln(&groupname)
 				fmt.Println("What do you want the appendix to be for this microservice (ex: accvm)?: ")
 				//take the input from user into a variable called appendix
 				fmt.Scanln(&appendix)
-				fmt.Println("What do you want the organization id to be this microservice (ex: silkworm_ac)?: ")
-				fmt.Scanln(&orgId)
 
-				fmt.Println("What do you want the allowed origins to be for this microservice (ex: https://admin-console.eagleeyes.ai/)? You can provide multiple origins separated by commas:")
+				//fmt.Println("What do you want the allowed origins to be for this microservice (ex: https://admin-console.eagleeyes.ai/)? You can provide multiple origins separated by commas:")
+				//
+				//// Use a buffered reader to allow multiple comma-separated inputs
+				//reader := bufio.NewReader(os.Stdin)
+				//originsInput, _ := reader.ReadString('\n')
+				//
+				//// Split the input into a slice of strings and trim any extra spaces
+				//allowedOrigins := strings.Split(strings.TrimSpace(originsInput), ",")
 
-				// Use a buffered reader to allow multiple comma-separated inputs
-				reader := bufio.NewReader(os.Stdin)
-				originsInput, _ := reader.ReadString('\n')
-
-				// Split the input into a slice of strings and trim any extra spaces
-				allowedOrigins := strings.Split(strings.TrimSpace(originsInput), ",")
+				allowedOrigins := []string{"*"}
 
 				//extract the routes from the router.go file
-				data := Extract(string(content))
+				data := Extract(string(content), groupname)
 
-				_ = Map(orgId, appendix, allowedOrigins, data)
-				fmt.Println("Successfully mapped the routes")
+				_ = Map(orgId, appendix, allowedOrigins, data, gatewayUrl)
+
+				fmt.Println("Completed processing the microservice at: ", path)
+
 			}
 		}
 

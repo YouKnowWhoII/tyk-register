@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"tyk-register/functions"
 )
 
@@ -13,8 +14,17 @@ type RouteInfo struct {
 }
 
 func main() {
-	functions.Traverse()
-
+	var orgId, gatewayUrl, baseDir string
+	fmt.Println("What do you want the organization id to be the microservices (ex: silkworm_ac)?: ")
+	fmt.Scanln(&orgId)
+	fmt.Println("What is the file path for your organization (folder in which the microservices are, ex: '/Users/nadulj/Documents/Evolza/Silkworm/global_console')")
+	fmt.Scanln(&baseDir)
+	fmt.Println("What is the gateway url (ex: 'https://tyk-apim.cgaas.ai/tyk/apis' ?: ")
+	fmt.Scanln(&gatewayUrl)
+	//orgId = "silkworm_gc"
+	//gatewayUrl = "http://localhost:8080/tyk/apis"
+	functions.Traverse(orgId, gatewayUrl, baseDir)
+	//utils.PrintInfo()
 }
 
 //func main() {
