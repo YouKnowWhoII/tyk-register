@@ -1,3 +1,3 @@
 package functions
 
-var BASE_PATH = "/Users/nadulj/Documents/Evolza/Silkworm/global_console"
+var BASE_PATH = "/Users/d/Desktop/Evolza-Tasks/Evolza-Tender-Management"

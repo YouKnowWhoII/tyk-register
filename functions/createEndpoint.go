@@ -20,6 +20,8 @@ func createEndpoint(gatewayUrl string, json string) error {
 	req.Header.Set("x-tyk-authorization", "foo")
 	req.Header.Set("Content-Type", "application/json")
 
+	fmt.Print(req)
+
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Error sending request:", err)
@@ -30,7 +32,7 @@ func createEndpoint(gatewayUrl string, json string) error {
 	if err != nil {
 		fmt.Println("Error reading response:", err)
 	}
-	fmt.Println(string(bodyText))
+	fmt.Println("req",string(bodyText))
 
 	return nil
 }

@@ -15,6 +15,7 @@ func Traverse(orgId string, gatewayUrl string, baseDir string) {
 	// Walk through the directory
 	err := filepath.Walk(baseDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
+			fmt.Print("line 18: ",err)
 			return err
 		}
 
@@ -37,6 +38,7 @@ func Traverse(orgId string, gatewayUrl string, baseDir string) {
 				// Read and print the content of router.go
 				content, err := ioutil.ReadFile(routerPath)
 				if err != nil {
+					fmt.Print("line 40:", err)
 					return err
 				}
 

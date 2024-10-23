@@ -21,14 +21,14 @@ func Map(orgId string, appendix string, allowedOrigins []string, routes *[]dtos.
 		}
 
 		//add a unique check for api id
-		utils.UniqueCheck(requestData.APIID)
+		// utils.UniqueCheck(requestData.APIID)
 
 		//parse to template here
 		tmpl, err := template.New("request").Funcs(template.FuncMap{
 			"join": strings.Join,
 		}).ParseFiles("templates/request.template")
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("line 31",err)
 			return err
 		}
 
@@ -36,7 +36,7 @@ func Map(orgId string, appendix string, allowedOrigins []string, routes *[]dtos.
 
 		err = tmpl.ExecuteTemplate(buf, "request.template", requestData)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("line 39", err)
 			return err
 		}
 
