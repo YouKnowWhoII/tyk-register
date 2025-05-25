@@ -6,9 +6,9 @@ import (
 	"net/http"
 )
 
-func ReloadGateway() {
+func ReloadGateway(gatewayurl string) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", "https://winway.tyk.gtw.cgaas.ai", nil)
+	req, err := http.NewRequest("GET", gatewayurl+"/tyk/reload/group", nil)
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 	}

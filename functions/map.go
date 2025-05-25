@@ -28,7 +28,7 @@ func Map(orgId string, appendix string, allowedOrigins []string, routes *[]dtos.
 			"join": strings.Join,
 		}).ParseFiles("templates/request.template")
 		if err != nil {
-			fmt.Println("line 31",err)
+			fmt.Println("line 31", err)
 			return err
 		}
 
@@ -43,6 +43,6 @@ func Map(orgId string, appendix string, allowedOrigins []string, routes *[]dtos.
 		_ = createEndpoint(gatewayUrl, buf.String())
 	}
 	fmt.Println("Successfully registered the microservice with Tyk!")
-	utils.ReloadGateway()
+	utils.ReloadGateway(gatewayUrl)
 	return nil
 }
