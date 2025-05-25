@@ -15,7 +15,7 @@ func Traverse(orgId string, gatewayUrl string, baseDir string) {
 	// Walk through the directory
 	err := filepath.Walk(baseDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			fmt.Print("line 18: ",err)
+			fmt.Print("line 18: ", err)
 			return err
 		}
 
@@ -47,7 +47,7 @@ func Traverse(orgId string, gatewayUrl string, baseDir string) {
 				var appendix, groupname string
 				fmt.Println("What do you want the group name to be for this microservice (ex: '/ac_user_management/api'?: ")
 				fmt.Scanln(&groupname)
-				fmt.Println("What do you want the appendix to be for this microservice (ex: accvm)?: ")
+				fmt.Println("What do you want the appendix to be for this microservice [] (ex: LotteryDrawSchedule-app1954)?: ")
 				//take the input from user into a variable called appendix
 				fmt.Scanln(&appendix)
 

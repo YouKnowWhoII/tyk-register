@@ -8,7 +8,7 @@ import (
 
 func FindAllAPIs() ([]string, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", "https://tender-mgt-tyk.gateway.cgaas.ai", nil)
+	req, err := http.NewRequest("GET", "https://winway.tyk.gtw.cgaas.ai", nil)
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 	}
